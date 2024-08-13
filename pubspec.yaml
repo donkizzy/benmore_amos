@@ -32,6 +32,10 @@ dependencies:
     sdk: flutter
   google_fonts: ^6.2.1
   flutter_staggered_grid_view: ^0.7.0
+  flutter_custom_carousel_slider:
+    path: ../flutter_custom_carousel_slider
+#    git: https://github.com/donkizzy/flutter_custom_carousel_slider.git
+  cached_network_image: ^3.4.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -35,10 +35,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: const BoxDecoration(color: athensGrey, shape: BoxShape.circle),
-                                  child: const Icon(Icons.arrow_back),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: const BoxDecoration(color: athensGrey, shape: BoxShape.circle),
+                                    child: const Icon(Icons.arrow_back),
+                                  ),
                                 ),
                                 Container(
                                   padding: const EdgeInsets.all(10),
@@ -225,12 +231,37 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               childrenDelegate: SliverChildBuilderDelegate(
-                (context, index) => ClipRRect(
-                  borderRadius: BorderRadius.circular(44),
-                  child: Image.network(
-                    'https://picsum.photos/1024/1024',
-                    fit: BoxFit.cover,
-                  ),
+                (context, index) => Stack(
+                  alignment: Alignment.topRight,
+                  clipBehavior: Clip.none,
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(44),
+                      child: Image.network(
+                        'https://picsum.photos/1024/1024',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                         // Navigator.of(context).push(smartAnimate(const AddCaption()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration:  BoxDecoration(
+                            color: ebonyClay.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.more_vert_outlined,color: Colors.white,),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
