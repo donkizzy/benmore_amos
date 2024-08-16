@@ -1,4 +1,4 @@
-import 'package:benmore_amos/features/posts/presentation/pages/post_page.dart';
+import 'package:benmore_amos/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme()
       ),
-      home: const PostPage(),
+      home: const LoginPage(),
     );
   }
 }
