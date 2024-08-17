@@ -1,4 +1,5 @@
 import 'package:benmore_amos/core/injector.dart';
+import 'package:benmore_amos/core/storage_manager.dart';
 import 'package:benmore_amos/features/auth/data/models/auth_response.dart';
 import 'package:benmore_amos/features/auth/data/models/login_request.dart';
 import 'package:benmore_amos/features/auth/data/models/register_request.dart';
@@ -9,11 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepository _authRepository;
+  late AuthRepository _authRepository;
+  late StorageManager _storageManager ;
 
-  AuthCubit({AuthRepository? authRepository})
-      : _authRepository = authRepository ?? sl<AuthRepository>(),
-        super(AuthInitial());
+  AuthCubit({AuthRepository? authRepository,StorageManager? storageManager}) : super(AuthInitial()) {
+    _authRepository = authRepository ?? sl<AuthRepository>();
+    _storageManager = storageManager ?? sl<StorageManager>();
+  }
+
 
   void login(LoginRequest loginRequest) async {
     try {
@@ -22,6 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       response.fold((l) {
         emit(LoginError(error: l));
       }, (r) {
+        _storageManager.saveToken(r.token ?? '');
         emit(LoginSuccess(authResponse: r));
       });
     } catch (e) {
@@ -36,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
       response.fold((l) {
         emit(RegisterError(error: l));
       }, (r) {
+        _storageManager.saveToken(r.token ?? '');
         emit(RegisterSuccess(authResponse: r));
       });
     } catch (e) {
