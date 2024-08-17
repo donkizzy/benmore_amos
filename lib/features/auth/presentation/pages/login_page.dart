@@ -6,6 +6,7 @@ import 'package:benmore_amos/features/shared/presentation/widgets/custom_button.
 import 'package:benmore_amos/features/shared/presentation/widgets/custom_text_field.dart';
 import 'package:benmore_amos/utilities/app_colors.dart';
 import 'package:benmore_amos/utilities/form_mixin.dart';
+import 'package:benmore_amos/utilities/snackbar_mixin.dart';
 import 'package:benmore_amos/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,10 +19,9 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with FormMixin {
+class _LoginPageState extends State<LoginPage> with FormMixin, SnackBarMixin {
   final ValueNotifier<bool> _isLoading = ValueNotifier(false);
   AuthCubit authCubit = AuthCubit();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> with FormMixin {
           }
           if (state is LoginError) {
             _isLoading.value = false;
+            showSnackBar(context, state.error);
           }
         },
         child: SingleChildScrollView(

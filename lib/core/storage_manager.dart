@@ -16,4 +16,9 @@ class StorageManager {
     return _sharedPreferences.getString(authToken);
   }
 
+
+  void clearAll() {
+    _sharedPreferences.clear();
+  }
+
 }

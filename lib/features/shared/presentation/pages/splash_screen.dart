@@ -17,23 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    Timer(const Duration(seconds: 2), () {
-      if (mounted) {
-        StorageManager storageManager = sl<StorageManager>();
-        if(storageManager.getToken() != null){
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const PostPage()));
-        }else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const LoginPage()));
-        }
-      }
-    });
-
+    handleSplash();
     super.initState();
   }
 
@@ -48,5 +32,24 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+
+  void handleSplash(){
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        StorageManager storageManager = sl<StorageManager>();
+        if(storageManager.getToken() != null && storageManager.getToken() != ''){
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => const PostPage()));
+        }else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => const LoginPage()));
+        }
+      }
+    });
   }
 }
