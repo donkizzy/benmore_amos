@@ -2,7 +2,7 @@ import 'package:benmore_amos/utilities/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomButton extends StatefulWidget {
+class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final ValueNotifier<bool?>? isLoading;
@@ -10,15 +10,11 @@ class CustomButton extends StatefulWidget {
 
   const CustomButton({super.key, required this.onTap, required this.title, this.icon, this.isLoading});
 
-  @override
-  State<CustomButton> createState() => _CustomButtonState();
-}
 
-class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: widget.isLoading ?? ValueNotifier<bool?>(false),
+      valueListenable: isLoading ?? ValueNotifier<bool?>(false),
       builder: (BuildContext context, bool? value, Widget? child) {
         return IgnorePointer(
           ignoring: value ?? false,
@@ -28,7 +24,7 @@ class _CustomButtonState extends State<CustomButton> {
                 ? () {
                     HapticFeedback.lightImpact();
                     FocusScope.of(context).unfocus();
-                    widget.onTap();
+                    onTap();
                   }
                 : null,
             child: Container(
@@ -40,14 +36,14 @@ class _CustomButtonState extends State<CustomButton> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (widget.icon != null) ...[
-                    widget.icon!,
+                  if (icon != null) ...[
+                    icon!,
                     const SizedBox(
                       width: 12,
                     )
                   ],
                   Text(
-                    widget.title,
+                    title,
                     style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(

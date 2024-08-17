@@ -1,5 +1,6 @@
-import 'package:benmore_amos/features/auth/presentation/pages/login_page.dart';
 import 'package:benmore_amos/core/injector.dart' as di;
+import 'package:benmore_amos/features/shared/presentation/pages/splash_screen.dart';
+import 'package:benmore_amos/utilities/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,14 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'BenMore Social',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: coralOrange),
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme()
       ),
-      home: const LoginPage(),
+      home: const SplashScreen(),
     );
   }
 }

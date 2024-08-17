@@ -7,12 +7,16 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final String prefixIcon ;
   final Widget? suffixIcon ;
-  const CustomTextField({super.key, required this.controller, required this.hintText, required this.prefixIcon,  this.suffixIcon});
+  final FormFieldValidator<String>? validator;
+  final bool? obscureText;
+  const CustomTextField({super.key, required this.controller, required this.hintText, required this.prefixIcon,  this.suffixIcon, this.validator, this.obscureText});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      validator: validator,
+      obscureText: obscureText ?? false,
       decoration:  InputDecoration(
         hintText: hintText,
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
