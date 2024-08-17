@@ -4,7 +4,9 @@ abstract class AppConfig {
   static const String register = '$baseUrl/users/register';
   static const String login = '$baseUrl/users/login';
 
-  static String saveLocationInfo(String id) => "$baseUrl/api/v1/user-destinations/$id";
+  static String fetchUser(String id) => "$baseUrl/users/$id";
+  static String toggleFollow(String id) => "$baseUrl/user/toggleFollow/$id";
+  static String fetchComment(String id) => "$baseUrl/posts/$id/comment";
 
 
 }
