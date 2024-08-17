@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ApiError {
   late String errorDescription;
-  ApiError? apiErrorModel;
+
 
   ApiError({required this.errorDescription});
 
