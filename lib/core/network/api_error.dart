@@ -21,7 +21,7 @@ class ApiError {
           errorDescription = "Connection timeout";
           break;
         case DioExceptionType.badResponse:
-          errorDescription = "Connection failed due to internet connection";
+          errorDescription = dioError.response?.data['message'];
           break;
         case DioExceptionType.receiveTimeout:
           errorDescription = "Connection timeout";
