@@ -12,7 +12,7 @@ class PostRepository{
 
   Future<Either<String,  List<CommentResponse>>> fetchComment(String postId) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.fetchComment(postId), method: RequestMethod.post);
+      final response = await networkProvider.call(path: AppConfig.fetchComment(postId), method: RequestMethod.get);
       if (response?.statusCode == 200) {
         final authData = List<CommentResponse>.from(response?.data.map((x) => CommentResponse.fromJson(x)));
         return Right(authData);
@@ -26,7 +26,7 @@ class PostRepository{
 
   Future<Either<String, PostsResponse>> fetchPosts(int page) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.fetchPosts(page), method: RequestMethod.post);
+      final response = await networkProvider.call(path: AppConfig.fetchPosts(page), method: RequestMethod.get);
       if (response?.statusCode == 200) {
         final posts =  PostsResponse.fromJson(response?.data);
         return Right(posts);
