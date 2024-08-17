@@ -1,7 +1,9 @@
 import 'package:benmore_amos/core/injector.dart';
+import 'package:benmore_amos/features/posts/presentation/widgets/comment_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:benmore_amos/core/storage_manager.dart';
 import 'package:benmore_amos/features/posts/data/models/post_response.dart';
-import 'package:benmore_amos/features/posts/presentation/widgets/comment_item.dart';
 import 'package:benmore_amos/features/profile/presentation/pages/profile_page.dart';
 import 'package:benmore_amos/features/shared/presentation/widgets/circular_image.dart';
 import 'package:benmore_amos/utilities/app_colors.dart';
@@ -48,8 +50,8 @@ class PostItem extends StatelessWidget {
                           const Icon(Icons.verified, color: coralOrange, size: 24),
                         ],
                       ),
-                      const Text('yesterday at 11:30',
-                          style: TextStyle(fontSize: 16, color: ironGrey, fontWeight: FontWeight.w600)),
+                      Text(timeago.format((post?.createdAt ?? DateTime.now())),
+                          style: const TextStyle(fontSize: 16, color: ironGrey, fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ],
@@ -73,11 +75,19 @@ class PostItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(57),
-                  child: Image.network(
-                    'https://picsum.photos/1024/1024',
-                    height: height(context) / 2,
-                    width: width(context) * .9,
-                    fit: BoxFit.cover,
+                  child: CachedNetworkImage(
+                    imageUrl: post?.imageUrl ?? "http://via.placeholder.com/200x150",
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: height(context) / 2,
+                      width: width(context) * .9,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,),
+                      ),
+                    ),
+                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 Positioned(
@@ -91,7 +101,7 @@ class PostItem extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          // Navigator.of(context).push(smartAnimate(const AddCaption()));
+
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15),
@@ -163,7 +173,14 @@ class PostItem extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const CommentItem()
+          SizedBox(
+            height: 100,
+              child: CommentWidget(
+            postId: post?.id,
+          )),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );

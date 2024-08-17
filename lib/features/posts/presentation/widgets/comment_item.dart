@@ -1,68 +1,72 @@
+import 'package:benmore_amos/features/posts/data/models/comment_response.dart';
+import 'package:benmore_amos/features/shared/presentation/widgets/circular_image.dart';
 import 'package:benmore_amos/utilities/app_colors.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/material.dart';
 
 class CommentItem extends StatelessWidget {
-  const CommentItem({super.key});
+  final Comment? comment ;
+  const CommentItem({super.key, required this.comment});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return  Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(
+        CustomCircularImage(
+          imageUrl: comment?.user?.profilePicture ,
           radius: 20,
-          backgroundImage: NetworkImage('https://picsum.photos/200/30'),
         ),
-        SizedBox(width: 12),
-        Expanded(
+        const SizedBox(width: 12),
+         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text('Darrel Steward', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
-                  SizedBox(width: 5),
-                  Icon(Icons.verified, color: coralOrange, size: 24),
+                  Text(comment?.user?.username ?? 'N/A', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.verified, color: coralOrange, size: 24),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Text('Finally Congratulations on completing your project',
-                  style: TextStyle(fontSize: 16, color: ebonyClay, fontWeight: FontWeight.w500)),
-              SizedBox(
+              Text(comment?.comment ?? 'N/A',
+                  style: const TextStyle(fontSize: 16, color: ebonyClay, fontWeight: FontWeight.w500)),
+              const SizedBox(
                 height: 5,
               ),
-              Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                   Row(
                     children: [
-                      Text('today at 11:30',
-                          style: TextStyle(
+                      Text(timeago.format((comment?.createdAt ?? DateTime.now())),
+                          style: const TextStyle(
                             color: ironGrey,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text('Reply',
+                      const Text('Reply',
                           style: TextStyle(fontSize: 16, color: coralOrange, fontWeight: FontWeight.w600)),
                     ],
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.favorite_border_outlined,
                         size: 20,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
                       Text(
-                        '173',
-                        style: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+                        comment?.likes.toString() ?? '0',
+                        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
                       ),
-                      SizedBox(width: 10,)
+                      const SizedBox(width: 10,)
                     ],
                   )
                 ],

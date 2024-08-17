@@ -39,7 +39,6 @@ class _PostPageState extends State<PostPage> {
               itemBuilder: (BuildContext context, int index) {
                 return PostItem(post: state.posts.posts?[index],);
               },
-
             );
           }
           if(state is FetchPostError){

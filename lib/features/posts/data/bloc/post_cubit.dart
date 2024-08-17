@@ -16,9 +16,9 @@ class PostCubit extends Cubit<PostState> {
   }
 
 
-  void fetchComments(String postId) async {
+  void fetchComments(String? postId) async {
     emit(FetchCommentsLoading());
-    final result = await _postRepository.fetchComment(postId);
+    final result = await _postRepository.fetchComment(postId ?? '');
     result.fold(
           (l) => emit(FetchCommentError(error: l)),
           (r) => emit(FetchCommentSuccess(comments: r)),

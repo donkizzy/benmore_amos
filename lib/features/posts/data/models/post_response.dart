@@ -54,7 +54,7 @@ class Post {
     imageUrl: json["image_url"],
     likes: json["likes"],
     assignedTo: json["assigned_to"] == null ? null : Following.fromJson(json["assigned_to"]),
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,8 @@ class Post {
     "image_url": imageUrl,
     "likes": likes,
     "assigned_to": assignedTo?.toJson(),
-    "createdAt": createdAt?.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
   };
 }
+
 

@@ -15,7 +15,7 @@ final class FetchCommentsLoading extends PostState {
 }
 
 final class FetchCommentSuccess extends PostState {
-  final  List<CommentResponse> comments ;
+  final  CommentResponse comments ;
 
   const FetchCommentSuccess({required this.comments});
   @override

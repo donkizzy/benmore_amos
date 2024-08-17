@@ -10,12 +10,12 @@ class PostRepository{
 
   PostRepository({required this.networkProvider});
 
-  Future<Either<String,  List<CommentResponse>>> fetchComment(String postId) async {
+  Future<Either<String,  CommentResponse>> fetchComment(String postId) async {
     try {
       final response = await networkProvider.call(path: AppConfig.fetchComment(postId), method: RequestMethod.get);
       if (response?.statusCode == 200) {
-        final authData = List<CommentResponse>.from(response?.data.map((x) => CommentResponse.fromJson(x)));
-        return Right(authData);
+        final comments =  CommentResponse.fromJson(response?.data);
+        return Right(comments);
       } else {
         return Left(response?.data['message']);
       }
