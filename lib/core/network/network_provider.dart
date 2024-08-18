@@ -6,8 +6,8 @@ class NetworkProvider{
 
   Dio _getDioInstance(){
     var dio=Dio(BaseOptions(
-        connectTimeout: const Duration(seconds: 3),
-        receiveTimeout: const Duration(seconds: 3),
+        connectTimeout: const Duration(minutes: 3),
+        receiveTimeout: const Duration(minutes: 3),
     ));
 
     dio.interceptors.add(AppInterceptor());
@@ -20,7 +20,7 @@ class NetworkProvider{
       {
         required String path,
         required  RequestMethod method,
-        Map<String,dynamic> body=const {},
+        dynamic body=const {},
         Map<String,dynamic> queryParams=const {}
       })async{
     Response? response;
@@ -46,8 +46,20 @@ class NetworkProvider{
           response = await _getDioInstance()
               .delete(path, data: body, queryParameters: queryParams);
           break;
-
-
+        case RequestMethod.upload:
+          _getDioInstance().options.headers.addAll(
+            {
+              "Accept": "*/**",
+              'Accept-Encoding': 'gzip, deflate, br',
+              'Connection': 'keep-alive',
+              'Content-Type': 'application/form-data'
+            },
+          );
+          response = await _getDioInstance().post(
+            path,
+            data: body,
+          );
+          break;
       }
 
       return response;
@@ -58,4 +70,4 @@ class NetworkProvider{
   }
 }
 
-enum RequestMethod { get, post, put, patch, delete }
+enum RequestMethod { get, post, put, patch, delete,upload }

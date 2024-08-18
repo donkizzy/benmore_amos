@@ -42,7 +42,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
+
+	<true/><key>NSPhotoLibraryUsageDescription</key>
+    <string>Benmore Social needs it to allow you upload a profile picture</string>
+
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

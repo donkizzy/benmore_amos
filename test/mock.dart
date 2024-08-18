@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:benmore_amos/features/auth/data/models/login_request.dart';
 import 'package:benmore_amos/features/auth/data/models/register_request.dart';
 import 'package:benmore_amos/features/auth/data/models/user_model.dart';
@@ -10,7 +12,7 @@ import 'package:benmore_amos/features/posts/data/models/like_response.dart';
 import 'package:benmore_amos/features/posts/data/models/post_response.dart';
 import 'package:benmore_amos/features/posts/data/models/profile_response.dart';
 
-
+var file = File('assets/lock.svg');
 final loginRequest = LoginRequest(email: 'test@example.com', password: 'password');
 final registerRequest = RegisterRequest(email: 'test@example.com', password: 'password', username: 'Test-User');
 User user = const User(id: '1', email: 'test@example.com', username: 'Test-User');
