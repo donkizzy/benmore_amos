@@ -1,6 +1,7 @@
 import 'package:benmore_amos/core/network/app_config.dart';
 import 'package:benmore_amos/core/network/network_provider.dart';
-import 'package:benmore_amos/features/auth/data/models/auth_response.dart';
+import 'package:benmore_amos/features/posts/data/models/follow_response.dart';
+import 'package:benmore_amos/features/posts/data/models/profile_response.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -11,11 +12,11 @@ class ProfileRepository {
   ProfileRepository({required this.networkProvider});
 
 
-  Future<Either<String, AuthResponse>> fetchProfile(String userId) async {
+  Future<Either<String, ProfileResponse>> fetchProfile(String userId) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.fetchUser(userId), method: RequestMethod.post,);
+      final response = await networkProvider.call(path: AppConfig.fetchUser(userId), method: RequestMethod.get,);
       if (response?.statusCode == 200) {
-        final authData = AuthResponse.fromJson(response?.data);
+        final authData = ProfileResponse.fromJson(response?.data);
         return Right(authData);
       } else {
         return Left(response?.data['message']);
@@ -25,11 +26,11 @@ class ProfileRepository {
     }
   }
 
-  Future<Either<String, AuthResponse>> toggleFollow(String postId) async {
+  Future<Either<String, FollowResponse>> toggleFollow(String postId) async {
     try {
       final response = await networkProvider.call(path: AppConfig.toggleFollow(postId), method: RequestMethod.post);
       if (response?.statusCode == 200) {
-        final authData = AuthResponse.fromJson(response?.data);
+        final authData = FollowResponse.fromJson(response?.data);
         return Right(authData);
       } else {
         return Left(response?.data['message']);
