@@ -26,9 +26,9 @@ class ProfileRepository {
     }
   }
 
-  Future<Either<String, FollowResponse>> toggleFollow(String postId) async {
+  Future<Either<String, FollowResponse>> toggleFollow(String userId) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.toggleFollow(postId), method: RequestMethod.post);
+      final response = await networkProvider.call(path: AppConfig.toggleFollow(userId), method: RequestMethod.post);
       if (response?.statusCode == 200) {
         final authData = FollowResponse.fromJson(response?.data);
         return Right(authData);

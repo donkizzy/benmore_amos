@@ -75,4 +75,35 @@ void main() {
 
 
   });
+
+  group('PostCubit toggleLike', () {
+
+    blocTest<PostCubit, PostState>(
+      'emits ToggleLikeLoading and then ToggleLikeSuccess on successful toggleLike',
+      build: () {
+        when(mockPostRepository.toggleLike(postId))
+            .thenAnswer((_) async => const Right(likeResponse));
+        return postCubit;
+      },
+      act: (cubit) => cubit.toggleLike(postId),
+      expect: () => [
+        ToggleLikeLoading(),
+        const ToggleLikeSuccess(likeResponse: likeResponse),
+      ],
+    );
+
+    blocTest<PostCubit, PostState>(
+      'emits ToggleLikeLoading and then ToggleLikeError on failed toggleLike',
+      build: () {
+        when(mockPostRepository.toggleLike(postId))
+            .thenAnswer((_) async => const Left('Action failed'));
+        return postCubit;
+      },
+      act: (cubit) => cubit.toggleLike(postId),
+      expect: () => [
+        ToggleLikeLoading(),
+        const ToggleLikeError(error: 'Action failed'),
+      ],
+    );
+  });
 }

@@ -51,25 +51,3 @@ final class ToggleFollowError extends ProfileState {
   @override
   List<Object> get props => [error];
 }
-
-
-final class ToggleLikeLoading extends ProfileState {
-  @override
-  List<Object> get props => [];
-}
-
-final class ToggleLikeSuccess extends ProfileState {
-  final FollowResponse followResponse;
-
-  const ToggleLikeSuccess({required this.followResponse});
-  @override
-  List<Object> get props => [followResponse];
-}
-
-final class ToggleLikeError extends ProfileState {
-  final String error ;
-
-  const ToggleLikeError({required this.error});
-  @override
-  List<Object> get props => [error];
-}

@@ -1,5 +1,6 @@
 import 'package:benmore_amos/core/injector.dart';
 import 'package:benmore_amos/features/posts/data/models/comment_response.dart';
+import 'package:benmore_amos/features/posts/data/models/like_response.dart';
 import 'package:benmore_amos/features/posts/data/models/post_response.dart';
 import 'package:benmore_amos/features/posts/data/repositories/post_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -31,6 +32,15 @@ class PostCubit extends Cubit<PostState> {
     result.fold(
           (l) => emit(FetchPostError(error: l)),
           (r) => emit(FetchPostSuccess(posts: r)),
+    );
+  }
+
+  void toggleLike(String postId) async {
+    emit(ToggleLikeLoading());
+    final result = await _postRepository.toggleLike(postId);
+    result.fold(
+          (l) => emit(ToggleLikeError(error: l)),
+          (r) => emit(ToggleLikeSuccess(likeResponse: r)),
     );
   }
 }

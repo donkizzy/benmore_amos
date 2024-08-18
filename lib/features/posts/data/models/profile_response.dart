@@ -9,7 +9,7 @@ class ProfileResponse  extends Equatable{
   final int? totalFollowers;
   final int? profileViews;
 
-  ProfileResponse({
+  const ProfileResponse({
     this.id,
     this.username,
     this.email,

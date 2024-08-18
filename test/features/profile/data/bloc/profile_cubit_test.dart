@@ -27,13 +27,13 @@ void main() {
       'emits FetchProfileLoading and then FetchProfileSuccess on successful fetchProfile',
       build: () {
         when(mockProfileRepository.fetchProfile(userId))
-            .thenAnswer((_) async => Right(profileResponse));
+            .thenAnswer((_) async => const Right(profileResponse));
         return profileCubit;
       },
       act: (cubit) => cubit.fetchProfile(userId),
       expect: () => [
         FetchProfileLoading(),
-        FetchProfileSuccess(profile: profileResponse),
+        const FetchProfileSuccess(profile: profileResponse),
       ],
     );
 

@@ -23,9 +23,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void toggleFollow(String postId) async {
+  void toggleFollow(String userId) async {
     emit(ToggleFollowLoading());
-    final result = await _profileRepository.toggleFollow(postId);
+    final result = await _profileRepository.toggleFollow(userId);
     result.fold(
           (l) => emit(ToggleFollowError(error: l)),
           (r) => emit(ToggleFollowSuccess(followResponse: r)),

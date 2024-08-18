@@ -54,3 +54,26 @@ final class FetchPostError extends PostState {
   List<Object> get props => [error];
 }
 
+
+
+final class ToggleLikeLoading extends PostState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ToggleLikeSuccess extends PostState {
+  final LikeResponse likeResponse;
+
+  const ToggleLikeSuccess({required this.likeResponse});
+  @override
+  List<Object> get props => [likeResponse];
+}
+
+final class ToggleLikeError extends PostState {
+  final String error ;
+
+  const ToggleLikeError({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
