@@ -1,4 +1,5 @@
 import 'package:benmore_amos/features/posts/data/bloc/post_cubit.dart';
+import 'package:benmore_amos/features/posts/presentation/pages/create_post.dart';
 import 'package:benmore_amos/features/posts/presentation/widgets/post_item.dart';
 import 'package:benmore_amos/features/shared/presentation/widgets/custom_error_widget.dart';
 import 'package:benmore_amos/utilities/app_colors.dart';
@@ -18,7 +19,7 @@ class _PostPageState extends State<PostPage> {
 
   @override
   void initState() {
-    postCubit.fetchPosts(page: 0);
+    postCubit.fetchPosts(page: 1);
     super.initState();
   }
 
@@ -26,6 +27,15 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: athensGrey,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+         Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePost()));
+        },
+        shape: const CircleBorder(),
+        backgroundColor: coralOrange,
+        elevation: 0.0,
+        child: const Icon(Icons.add),
+      ),
       body: BlocBuilder<PostCubit, PostState>(
         bloc: postCubit,
         builder: (context, state) {

@@ -1,5 +1,7 @@
 import 'package:benmore_amos/core/injector.dart';
 import 'package:benmore_amos/features/posts/data/models/comment_response.dart';
+import 'package:benmore_amos/features/posts/data/models/create_post_request.dart';
+import 'package:benmore_amos/features/posts/data/models/create_post_response.dart';
 import 'package:benmore_amos/features/posts/data/models/like_response.dart';
 import 'package:benmore_amos/features/posts/data/models/post_response.dart';
 import 'package:benmore_amos/features/posts/data/repositories/post_repository.dart';
@@ -41,6 +43,33 @@ class PostCubit extends Cubit<PostState> {
     result.fold(
           (l) => emit(ToggleLikeError(error: l)),
           (r) => emit(ToggleLikeSuccess(likeResponse: r)),
+    );
+  }
+
+  void createPost(CreatePostRequest createPostRequest) async {
+    emit(CreatePostLoading());
+    final result = await _postRepository.createPost(createPostRequest);
+    result.fold(
+          (l) => emit(CreatePostError(error: l)),
+          (r) => emit(CreatePostSuccess(createPostResponse: r)),
+    );
+  }
+
+  void updatePost({required String postId, required CreatePostRequest createPostRequest}) async {
+    emit(UpdatePostLoading());
+    final result = await _postRepository.updatePost(postId: postId, createPost: createPostRequest);
+    result.fold(
+          (l) => emit(UpdatePostError(error: l)),
+          (r) => emit(UpdatePostSuccess(updatePostResponse: r)),
+    );
+  }
+
+  void deletePost(String postId) async {
+    emit(DeletePostLoading());
+    final result = await _postRepository.deletePost(postId);
+    result.fold(
+          (l) => emit(DeletePostError(error: l)),
+          (r) => emit(DeletePostSuccess()),
     );
   }
 }

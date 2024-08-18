@@ -41,7 +41,7 @@ class Post extends Equatable{
   final User? assignedTo;
   final DateTime? createdAt;
 
-  Post({
+  const Post({
     this.id,
     this.title,
     this.description,
