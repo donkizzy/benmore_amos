@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:benmore_amos/core/network/app_config.dart';
 import 'package:benmore_amos/core/network/network_provider.dart';
 import 'package:benmore_amos/features/posts/data/models/comment_response.dart';
@@ -55,10 +57,16 @@ class PostRepository{
     }
   }
 
-  Future<Either<String, CreatePostResponse>> createPost( CreatePostRequest createPostRequest) async {
+  Future<Either<String, CreatePostResponse>> createPost({required CreatePostRequest createPostRequest,required File? file}) async {
     try {
 
-      final response = await networkProvider.call(path: AppConfig.createPost, method: RequestMethod.post);
+      FormData formData = FormData.fromMap({
+        "title": createPostRequest.title,
+        "description": createPostRequest.description,
+        "file": await MultipartFile.fromFile(file?.path ?? ''),
+      });
+
+      final response = await networkProvider.call(path: AppConfig.createPost, method: RequestMethod.upload,body: formData);
       if (response?.statusCode == 200) {
         final likes =  CreatePostResponse.fromJson(response?.data);
         return Right(likes);
@@ -70,9 +78,15 @@ class PostRepository{
     }
   }
 
-  Future<Either<String, CreatePostResponse>> updatePost({required String postId,required CreatePostRequest createPost,}) async {
+  Future<Either<String, CreatePostResponse>> updatePost({required String postId,required CreatePostRequest createPostRequest, File? file}) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.posts(postId), method: RequestMethod.put,body: createPost.toJson());
+      FormData formData = FormData.fromMap({
+        "title": createPostRequest.title,
+        "description": createPostRequest.description,
+       if(file != null) "file": await MultipartFile.fromFile(file.path)
+      });
+
+      final response = await networkProvider.call(path: AppConfig.posts(postId), method: RequestMethod.put,body: formData);
       if (response?.statusCode == 200) {
         final likes =  CreatePostResponse.fromJson(response?.data);
         return Right(likes);

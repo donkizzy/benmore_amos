@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:benmore_amos/core/injector.dart';
 import 'package:benmore_amos/features/posts/data/models/comment_response.dart';
 import 'package:benmore_amos/features/posts/data/models/create_post_request.dart';
@@ -46,18 +48,18 @@ class PostCubit extends Cubit<PostState> {
     );
   }
 
-  void createPost(CreatePostRequest createPostRequest) async {
+  void createPost({required CreatePostRequest createPostRequest,required File? file}) async {
     emit(CreatePostLoading());
-    final result = await _postRepository.createPost(createPostRequest);
+    final result = await _postRepository.createPost(createPostRequest: createPostRequest, file: file);
     result.fold(
           (l) => emit(CreatePostError(error: l)),
           (r) => emit(CreatePostSuccess(createPostResponse: r)),
     );
   }
 
-  void updatePost({required String postId, required CreatePostRequest createPostRequest}) async {
+  void updatePost({required String postId, required CreatePostRequest createPostRequest, File? file}) async {
     emit(UpdatePostLoading());
-    final result = await _postRepository.updatePost(postId: postId, createPost: createPostRequest);
+    final result = await _postRepository.updatePost(postId: postId, createPostRequest: createPostRequest,file: file);
     result.fold(
           (l) => emit(UpdatePostError(error: l)),
           (r) => emit(UpdatePostSuccess(updatePostResponse: r)),

@@ -106,4 +106,99 @@ void main() {
       ],
     );
   });
+
+
+  group('PostCubit createPost', () {
+
+
+    blocTest<PostCubit, PostState>(
+      'emits CreatePostLoading and then CreatePostSuccess on successful createPost',
+      build: () {
+        when(mockPostRepository.createPost(createPostRequest: createPostRequest,file: file))
+            .thenAnswer((_) async => Right(createPostResponse));
+        return postCubit;
+      },
+      act: (cubit) => cubit.createPost(createPostRequest: createPostRequest,file: file),
+      expect: () => [
+        CreatePostLoading(),
+        CreatePostSuccess(createPostResponse: createPostResponse),
+      ],
+    );
+
+    blocTest<PostCubit, PostState>(
+      'emits CreatePostLoading and then CreatePostError on failed createPost',
+      build: () {
+        when(mockPostRepository.createPost(createPostRequest: createPostRequest,file: file))
+            .thenAnswer((_) async => const Left('Creation failed'));
+        return postCubit;
+      },
+      act: (cubit) => cubit.createPost(createPostRequest: createPostRequest,file: file),
+      expect: () => [
+        CreatePostLoading(),
+        const CreatePostError(error: 'Creation failed'),
+      ],
+    );
+  });
+
+  group('PostCubit updatePost', () {
+
+    blocTest<PostCubit, PostState>(
+      'emits UpdatePostLoading and then UpdatePostSuccess on successful updatePost',
+      build: () {
+        when(mockPostRepository.updatePost(postId: postId, createPostRequest: createPostRequest))
+            .thenAnswer((_) async => Right(createPostResponse));
+        return postCubit;
+      },
+      act: (cubit) => cubit.updatePost(postId: postId, createPostRequest: createPostRequest),
+      expect: () => [
+        UpdatePostLoading(),
+        UpdatePostSuccess(updatePostResponse: createPostResponse),
+      ],
+    );
+
+    blocTest<PostCubit, PostState>(
+      'emits UpdatePostLoading and then UpdatePostError on failed updatePost',
+      build: () {
+        when(mockPostRepository.updatePost(postId: postId, createPostRequest: createPostRequest))
+            .thenAnswer((_) async => const Left('Update failed'));
+        return postCubit;
+      },
+      act: (cubit) => cubit.updatePost(postId: postId, createPostRequest: createPostRequest),
+      expect: () => [
+        UpdatePostLoading(),
+        const UpdatePostError(error: 'Update failed'),
+      ],
+    );
+  });
+
+  group('PostCubit deletePost', () {
+
+    blocTest<PostCubit, PostState>(
+      'emits DeletePostLoading and then DeletePostSuccess on successful deletePost',
+      build: () {
+        when(mockPostRepository.deletePost(postId))
+            .thenAnswer((_) async => const Right(null));
+        return postCubit;
+      },
+      act: (cubit) => cubit.deletePost(postId),
+      expect: () => [
+        DeletePostLoading(),
+        DeletePostSuccess(),
+      ],
+    );
+
+    blocTest<PostCubit, PostState>(
+      'emits DeletePostLoading and then DeletePostError on failed deletePost',
+      build: () {
+        when(mockPostRepository.deletePost(postId))
+            .thenAnswer((_) async => const Left('Deletion failed'));
+        return postCubit;
+      },
+      act: (cubit) => cubit.deletePost(postId),
+      expect: () => [
+        DeletePostLoading(),
+        const DeletePostError(error: 'Deletion failed'),
+      ],
+    );
+  });
 }
