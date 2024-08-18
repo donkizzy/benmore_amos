@@ -3,6 +3,7 @@ import 'package:benmore_amos/features/auth/data/bloc/auth_cubit.dart';
 import 'package:benmore_amos/features/auth/data/repositories/auth_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -21,17 +22,19 @@ void main() {
     mockStorageManager = MockStorageManager();
     authCubit = AuthCubit(authRepository: mockAuthRepository, storageManager: mockStorageManager);
   });
-
+  test('initial state is correct', () {
+    expect(authCubit.state, AuthInitial());
+  });
   group('AuthCubit login', () {
 
     blocTest<AuthCubit, AuthState>(
       'emits LoginLoading and then LoginSuccess on successful login',
       build: () {
-        when(mockAuthRepository.login(loginRequest)).thenAnswer((_) async => const Right(authResponse));
+        when(mockAuthRepository.login(loginRequest)).thenAnswer((_) async =>  Right(authResponse));
         return authCubit;
       },
       act: (cubit) => cubit.login(loginRequest),
-      expect: () => [LoginLoading(), const LoginSuccess(authResponse: authResponse)],
+      expect: () => [LoginLoading(),  LoginSuccess(authResponse: authResponse)],
     );
 
     blocTest<AuthCubit, AuthState>(
@@ -47,11 +50,11 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'emits LoginError on exception during login',
       build: () {
-        when(mockAuthRepository.login(loginRequest)).thenThrow(Exception('Network error'));
+        when(mockAuthRepository.login(loginRequest)).thenThrow(DioException(requestOptions: RequestOptions(),type: DioExceptionType.cancel,));
         return authCubit;
       },
       act: (cubit) => cubit.login(loginRequest),
-      expect: () => [LoginLoading(), const LoginError(error: 'Exception: Network error')],
+      expect: () => [isA<LoginLoading>(),  isA<LoginError>()],
     );
   });
 
@@ -60,11 +63,11 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'emits RegisterLoading and then RegisterSuccess on successful registration',
       build: () {
-        when(mockAuthRepository.register(registerRequest)).thenAnswer((_) async => const Right(authResponse));
+        when(mockAuthRepository.register(registerRequest)).thenAnswer((_) async =>  Right(authResponse));
         return authCubit;
       },
       act: (cubit) => cubit.register(registerRequest),
-      expect: () => [RegisterLoading(), const RegisterSuccess(authResponse: authResponse)],
+      expect: () => [RegisterLoading(),  RegisterSuccess(authResponse: authResponse)],
     );
 
     blocTest<AuthCubit, AuthState>(

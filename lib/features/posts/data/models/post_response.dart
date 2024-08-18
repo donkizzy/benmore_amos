@@ -1,13 +1,13 @@
-
 import 'package:benmore_amos/features/auth/data/models/user_model.dart';
+import 'package:equatable/equatable.dart';
 
-class PostsResponse {
+class PostsResponse extends Equatable{
   final int? page;
   final int? limit;
   final int? totalPosts;
   final List<Post>? posts;
 
-  PostsResponse({
+  const PostsResponse({
     this.page,
     this.limit,
     this.totalPosts,
@@ -27,9 +27,12 @@ class PostsResponse {
     "totalPosts": totalPosts,
     "posts": posts == null ? [] : List<dynamic>.from(posts!.map((x) => x.toJson())),
   };
+
+  @override
+  List<Object?> get props => [page, limit, totalPosts, posts];
 }
 
-class Post {
+class Post extends Equatable{
   final String? id;
   final String? title;
   final String? description;
@@ -67,6 +70,9 @@ class Post {
     "assigned_to": assignedTo?.toJson(),
     "created_at": createdAt?.toIso8601String(),
   };
+
+  @override
+  List<Object?> get props => [id, title, description, imageUrl, likes, assignedTo, createdAt];
 }
 
 

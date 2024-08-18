@@ -1,10 +1,11 @@
 import 'package:benmore_amos/features/auth/data/models/user_model.dart';
+import 'package:equatable/equatable.dart';
 
-class FollowResponse {
+class FollowResponse extends Equatable{
   final String? message;
   final User? user;
 
-  FollowResponse({
+  const FollowResponse({
     this.message,
     this.user,
   });
@@ -18,4 +19,7 @@ class FollowResponse {
     "message": message,
     "user": user?.toJson(),
   };
+
+  @override
+  List<Object?> get props => [];
 }

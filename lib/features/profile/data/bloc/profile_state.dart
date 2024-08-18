@@ -30,6 +30,29 @@ final class FetchProfileError extends ProfileState {
   List<Object> get props => [error];
 }
 
+
+final class ToggleFollowLoading extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ToggleFollowSuccess extends ProfileState {
+  final FollowResponse followResponse;
+
+  const ToggleFollowSuccess({required this.followResponse});
+  @override
+  List<Object> get props => [followResponse];
+}
+
+final class ToggleFollowError extends ProfileState {
+  final String error ;
+
+  const ToggleFollowError({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
+
 final class ToggleLikeLoading extends ProfileState {
   @override
   List<Object> get props => [];

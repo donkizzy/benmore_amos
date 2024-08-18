@@ -1,13 +1,13 @@
-
 import 'package:benmore_amos/features/auth/data/models/user_model.dart';
+import 'package:equatable/equatable.dart';
 
-class CommentResponse {
+class CommentResponse extends Equatable{
   final int? page;
   final int? limit;
   final int? totalComments;
   final List<Comment>? comments;
 
-  CommentResponse({
+  const CommentResponse({
     this.page,
     this.limit,
     this.totalComments,
@@ -27,17 +27,20 @@ class CommentResponse {
     "totalComments": totalComments,
     "comments": comments == null ? [] : List<dynamic>.from(comments!.map((x) => x.toJson())),
   };
+
+  @override
+  List<Object?> get props => [page, limit, totalComments, comments];
 }
 
-class Comment {
+class Comment extends Equatable{
   final String? id;
   final User? user;
   final String? comment;
   final int? likes;
-  final List<dynamic>? likedBy;
+  final List<User>? likedBy;
   final DateTime? createdAt;
 
-  Comment({
+  const Comment({
     this.id,
     this.user,
     this.comment,
@@ -51,7 +54,7 @@ class Comment {
     user: json["user"] == null ? null : User.fromJson(json["user"]),
     comment: json["comment"],
     likes: json["likes"],
-    likedBy: json["likedBy"] == null ? [] : List<dynamic>.from(json["likedBy"]!.map((x) => x)),
+    likedBy: json["likedBy"] == null ? [] : List<User>.from(json["likedBy"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
   );
 
@@ -63,4 +66,7 @@ class Comment {
     "likedBy": likedBy == null ? [] : List<dynamic>.from(likedBy!.map((x) => x)),
     "createdAt": createdAt?.toIso8601String(),
   };
+
+  @override
+  List<Object?> get props => [id, user, comment, likes, likedBy, createdAt];
 }

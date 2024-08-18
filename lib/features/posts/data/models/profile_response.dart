@@ -1,4 +1,6 @@
-class ProfileResponse {
+import 'package:equatable/equatable.dart';
+
+class ProfileResponse  extends Equatable{
   final String? id;
   final String? username;
   final String? email;
@@ -36,5 +38,8 @@ class ProfileResponse {
     "totalFollowers": totalFollowers,
     "profileViews": profileViews,
   };
+
+  @override
+  List<Object?> get props => [id, username, email, profilePicture, totalLikesGiven, totalFollowers, profileViews];
 }
 

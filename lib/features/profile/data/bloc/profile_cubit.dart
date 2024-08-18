@@ -23,12 +23,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void toggleLike(String postId) async {
-    emit(ToggleLikeLoading());
+  void toggleFollow(String postId) async {
+    emit(ToggleFollowLoading());
     final result = await _profileRepository.toggleFollow(postId);
     result.fold(
-          (l) => emit(ToggleLikeError(error: l)),
-          (r) => emit(ToggleLikeSuccess(followResponse: r)),
+          (l) => emit(ToggleFollowError(error: l)),
+          (r) => emit(ToggleFollowSuccess(followResponse: r)),
     );
   }
 }
