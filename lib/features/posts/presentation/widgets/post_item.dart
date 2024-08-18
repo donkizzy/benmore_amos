@@ -28,7 +28,7 @@ class PostItem extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: post?.assignedTo?.id,)));
             },
             child:  Padding(
               padding: const EdgeInsets.only(left: 5.0),

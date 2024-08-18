@@ -18,7 +18,7 @@ class _PostPageState extends State<PostPage> {
 
   @override
   void initState() {
-    postCubit.fetchPosts(2);
+    postCubit.fetchPosts(page: 0);
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _PostPageState extends State<PostPage> {
             return CustomErrorWidget(
               error: state.error,
               onTap: () {
-                postCubit.fetchPosts(0);
+                postCubit.fetchPosts(page: 0);
               },
             );
           }

@@ -25,9 +25,9 @@ class PostCubit extends Cubit<PostState> {
     );
   }
 
-  void fetchPosts(int page) async {
+  void fetchPosts({required int page, String? userId}) async {
     emit(FetchPostLoading());
-    final result = await _postRepository.fetchPosts(page);
+    final result = await _postRepository.fetchPosts(page: page,userId: userId);
     result.fold(
           (l) => emit(FetchPostError(error: l)),
           (r) => emit(FetchPostSuccess(posts: r)),

@@ -24,9 +24,9 @@ class PostRepository{
     }
   }
 
-  Future<Either<String, PostsResponse>> fetchPosts(int page) async {
+  Future<Either<String, PostsResponse>> fetchPosts({required int page,String? userId}) async {
     try {
-      final response = await networkProvider.call(path: AppConfig.fetchPosts(page), method: RequestMethod.get);
+      final response = await networkProvider.call(path: AppConfig.fetchPosts(page,userId), method: RequestMethod.get);
       if (response?.statusCode == 200) {
         final posts =  PostsResponse.fromJson(response?.data);
         return Right(posts);

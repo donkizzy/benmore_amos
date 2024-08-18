@@ -1,4 +1,5 @@
-import 'package:benmore_amos/features/auth/data/models/following_model.dart';
+
+import 'package:benmore_amos/features/auth/data/models/user_model.dart';
 
 class CommentResponse {
   final int? page;
@@ -30,7 +31,7 @@ class CommentResponse {
 
 class Comment {
   final String? id;
-  final Following? user;
+  final User? user;
   final String? comment;
   final int? likes;
   final List<dynamic>? likedBy;
@@ -47,7 +48,7 @@ class Comment {
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
     id: json["id"],
-    user: json["user"] == null ? null : Following.fromJson(json["user"]),
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
     comment: json["comment"],
     likes: json["likes"],
     likedBy: json["likedBy"] == null ? [] : List<dynamic>.from(json["likedBy"]!.map((x) => x)),

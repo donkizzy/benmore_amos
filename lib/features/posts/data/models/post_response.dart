@@ -1,4 +1,5 @@
-import 'package:benmore_amos/features/auth/data/models/following_model.dart';
+
+import 'package:benmore_amos/features/auth/data/models/user_model.dart';
 
 class PostsResponse {
   final int? page;
@@ -34,7 +35,7 @@ class Post {
   final String? description;
   final String? imageUrl;
   final int? likes;
-  final Following? assignedTo;
+  final User? assignedTo;
   final DateTime? createdAt;
 
   Post({
@@ -53,7 +54,7 @@ class Post {
     description: json["description"],
     imageUrl: json["image_url"],
     likes: json["likes"],
-    assignedTo: json["assigned_to"] == null ? null : Following.fromJson(json["assigned_to"]),
+    assignedTo: json["assigned_to"] == null ? null : User.fromJson(json["assigned_to"]),
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
   );
 
