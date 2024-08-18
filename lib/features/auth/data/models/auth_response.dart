@@ -1,11 +1,12 @@
 import 'package:benmore_amos/features/auth/data/models/user_model.dart';
+import 'package:equatable/equatable.dart';
 
-class AuthResponse {
+class AuthResponse extends Equatable {
   final String? message;
   final User? user;
   final String? token;
 
-  AuthResponse({
+  const AuthResponse({
     this.message,
     this.user,
     this.token,
@@ -22,5 +23,8 @@ class AuthResponse {
     "user": user?.toJson(),
     "token": token,
   };
+
+  @override
+  List<Object?> get props => [message, user, token];
 }
 
