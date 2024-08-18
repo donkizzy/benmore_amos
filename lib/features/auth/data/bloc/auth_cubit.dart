@@ -27,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(LoginError(error: l));
       }, (r) {
         _storageManager.saveToken(r.token ?? '');
+        _storageManager.saveUserId(r.user?.id ?? '');
         emit(LoginSuccess(authResponse: r));
       });
     } catch (e) {
@@ -42,6 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(RegisterError(error: l));
       }, (r) {
         _storageManager.saveToken(r.token ?? '');
+        _storageManager.saveUserId(r.user?.id ?? '');
         emit(RegisterSuccess(authResponse: r));
       });
     } catch (e) {

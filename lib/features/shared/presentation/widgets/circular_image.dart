@@ -9,7 +9,7 @@ class CustomCircularImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl ?? 'https://picsum.photos/200/30',
+      imageUrl: imageUrl ?? 'https://picsum.photos/200/300',
       imageBuilder: (context, image) => CircleAvatar(
         backgroundImage: image,
         radius: radius,

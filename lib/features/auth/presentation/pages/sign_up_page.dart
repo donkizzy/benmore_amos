@@ -51,81 +51,84 @@ class _SignUpPageState extends State<SignUpPage> with FormMixin,SnackBarMixin{
             showSnackBar(context, state.error);
           }
         },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SizedBox(
-            height: height(context),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset('assets/logo.png', height: 100,),
-                  const SizedBox(height: 48,),
-                  const Text(
-                    'SignUp to Benmore Social',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
+        child: SizedBox(
+          height: height(context),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/logo.png', height: 100,),
+                    const SizedBox(height: 48,),
+                    const Text(
+                      'SignUp to Benmore Social',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  CustomTextField(
-                    controller: userNameController,
-                    hintText: 'Username',
-                    prefixIcon: 'assets/user.svg',
-                    validator: isRequired,
-                  ),
-                  const SizedBox(height: 48,),
-                  CustomTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    prefixIcon: 'assets/mail.svg',
-                    validator: isValidEmailAddress,
-                  ),
-                  const SizedBox(height: 48,),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _isPasswordVisible,
-                    builder: (context, isPasswordVisible, child) {
-                      return CustomTextField(
-                        controller: passwordController,
-                        hintText: 'Password',
-                        prefixIcon: 'assets/lock.svg',
-                        obscureText: !isPasswordVisible,
-                        suffixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            isPasswordVisible ? 'assets/eye-off.svg' : 'assets/eye.svg',
-                            height: 24,
-                            colorFilter: const ColorFilter.mode(ebonyClay, BlendMode.srcIn),
+                    const SizedBox(
+                      height: 48,
+                    ),
+                    CustomTextField(
+                      controller: userNameController,
+                      hintText: 'Username',
+                      prefixIcon: 'assets/user.svg',
+                      validator: isRequired,
+                    ),
+                    const SizedBox(height: 48,),
+                    CustomTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      prefixIcon: 'assets/mail.svg',
+                      validator: isValidEmailAddress,
+                    ),
+                    const SizedBox(height: 48,),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _isPasswordVisible,
+                      builder: (context, isPasswordVisible, child) {
+                        return CustomTextField(
+                          controller: passwordController,
+                          hintText: 'Password',
+                          prefixIcon: 'assets/lock.svg',
+                          obscureText: !isPasswordVisible,
+                          suffixIcon: IconButton(
+                            icon: SvgPicture.asset(
+                              isPasswordVisible ? 'assets/eye-off.svg' : 'assets/eye.svg',
+                              height: 24,
+                              colorFilter: const ColorFilter.mode(ebonyClay, BlendMode.srcIn),
+                            ),
+                            onPressed: () {
+                              _isPasswordVisible.value = !isPasswordVisible;
+                            },
                           ),
-                          onPressed: () {
-                            _isPasswordVisible.value = !isPasswordVisible;
-                          },
-                        ),
-                        validator: validatePassword(
-                          shouldContainCapitalLetter: false,
-                          shouldContainNumber: false,
-                          shouldContainSmallLetter: false,
-                          shouldContainSpecialChars: false,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 48,),
-                  CustomButton(
-                    title: 'Register',
-                    isLoading: _isLoading,
-                    onTap: () {
-                      var isValidate = _formKey.currentState!.validate();
-                      if (isValidate) {
-                        authCubit.register(RegisterRequest(email: emailController.text, password: passwordController.text,username: userNameController.text));
-                      }
-                    },
-                  ),
-                ],
-              ),
+                          validator: validatePassword(
+                            shouldContainCapitalLetter: false,
+                            shouldContainNumber: false,
+                            shouldContainSmallLetter: false,
+                            shouldContainSpecialChars: false,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 48,),
+                    CustomButton(
+                      title: 'Register',
+                      isLoading: _isLoading,
+                      onTap: () {
+                        var isValidate = _formKey.currentState!.validate();
+                        if (isValidate) {
+                          authCubit.register(RegisterRequest(email: emailController.text, password: passwordController.text,username: userNameController.text));
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 48,),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

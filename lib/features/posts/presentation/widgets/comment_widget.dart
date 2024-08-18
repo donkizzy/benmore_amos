@@ -1,6 +1,7 @@
 import 'package:benmore_amos/features/posts/data/bloc/post_cubit.dart';
 import 'package:benmore_amos/features/posts/presentation/widgets/comment_item.dart';
 import 'package:benmore_amos/features/shared/presentation/widgets/custom_error_widget.dart';
+import 'package:benmore_amos/utilities/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class _CommentWidgetState extends State<CommentWidget> with AutomaticKeepAliveCl
           return const Center(child: CircularProgressIndicator(),);
         }
         if(state is FetchCommentSuccess){
-          return ListView.separated(
+          return  (state.comments.comments ?? []).isNotEmpty ? ListView.separated(
             itemCount: state.comments.comments?.length ?? 0,
             physics: const ClampingScrollPhysics(),
             padding: EdgeInsets.zero,
@@ -42,7 +43,8 @@ class _CommentWidgetState extends State<CommentWidget> with AutomaticKeepAliveCl
             },
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(height: 10,);
-            },);
+            },) : const Center(child: Text('No comments yet....', style: TextStyle(
+              fontSize: 18, color: ebonyClay, fontWeight: FontWeight.w900)),);
         }
         if(state is FetchCommentError){
           return CustomErrorWidget(

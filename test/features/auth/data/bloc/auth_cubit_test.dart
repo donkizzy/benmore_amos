@@ -31,6 +31,8 @@ void main() {
       'emits LoginLoading and then LoginSuccess on successful login',
       build: () {
         when(mockAuthRepository.login(loginRequest)).thenAnswer((_) async =>  Right(authResponse));
+        when(mockStorageManager.saveToken(any)).thenAnswer((_) async => authResponse.token);
+        when(mockStorageManager.saveUserId(any)).thenAnswer((_) async => authResponse.user?.email);
         return authCubit;
       },
       act: (cubit) => cubit.login(loginRequest),

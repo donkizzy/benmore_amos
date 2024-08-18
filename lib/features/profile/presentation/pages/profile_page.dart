@@ -1,3 +1,5 @@
+import 'package:benmore_amos/core/injector.dart';
+import 'package:benmore_amos/core/storage_manager.dart';
 import 'package:benmore_amos/features/posts/data/bloc/post_cubit.dart';
 import 'package:benmore_amos/features/profile/data/bloc/profile_cubit.dart';
 import 'package:benmore_amos/features/shared/presentation/widgets/circular_image.dart';
@@ -20,6 +22,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   ProfileCubit profileCubit = ProfileCubit();
   PostCubit postCubit = PostCubit();
+  StorageManager storageManager = sl<StorageManager>();
 
   @override
   void initState() {
@@ -82,20 +85,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                   imageUrl: state.profile.profilePicture,
                                   radius: 70,
                                 ),
-                                const Row(
+                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('Charles Bababge',
-                                        style: TextStyle(fontSize: 30, color: ebonyClay, fontWeight: FontWeight.w900)),
-                                    SizedBox(width: 5),
-                                    Icon(Icons.verified, color: coralOrange, size: 24),
+                                    Text(state.profile.username ?? 'N/A',
+                                        style: const TextStyle(fontSize: 30, color: ebonyClay, fontWeight: FontWeight.w900)),
+                                    const SizedBox(width: 5),
+                                    const Icon(Icons.verified, color: coralOrange, size: 24),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text('johndoe@gmail.com',
-                                    style: TextStyle(fontSize: 16, color: ironGrey, fontWeight: FontWeight.w600)),
+                                 Text(state.profile.email ?? 'N/A',
+                                    style: const TextStyle(fontSize: 16, color: ironGrey, fontWeight: FontWeight.w600)),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -104,35 +107,37 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Row(
                             children: [
-                              Flexible(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(48),
-                                    color: coralOrange,
-                                  ),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.person_add,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 12,
-                                      ),
-                                      Text(
-                                        'Follow',
-                                        style:
-                                            TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
+                           if(widget.userId != storageManager.getUserId() )  ...[
+                             Flexible(
+                               child: Container(
+                                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(48),
+                                   color: coralOrange,
+                                 ),
+                                 child: const Row(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: [
+                                     Icon(
+                                       Icons.person_add,
+                                       color: Colors.white,
+                                     ),
+                                     SizedBox(
+                                       width: 12,
+                                     ),
+                                     Text(
+                                       'Follow',
+                                       style:
+                                       TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                                     ),
+                                   ],
+                                 ),
+                               ),
+                             ),
+                             const SizedBox(
+                               width: 5,
+                             ),
+                           ],
                               Flexible(
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),

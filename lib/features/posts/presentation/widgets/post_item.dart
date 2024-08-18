@@ -1,8 +1,6 @@
-import 'package:benmore_amos/core/injector.dart';
 import 'package:benmore_amos/features/posts/presentation/widgets/comment_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:benmore_amos/core/storage_manager.dart';
 import 'package:benmore_amos/features/posts/data/models/post_response.dart';
 import 'package:benmore_amos/features/profile/presentation/pages/profile_page.dart';
 import 'package:benmore_amos/features/shared/presentation/widgets/circular_image.dart';
@@ -124,8 +122,6 @@ class PostItem extends StatelessWidget {
                             GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () {
-                                StorageManager storageManager = sl<StorageManager>();
-                                storageManager.clearAll();
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(15),

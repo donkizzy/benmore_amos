@@ -8,6 +8,7 @@ class ProfileResponse  extends Equatable{
   final int? totalLikesGiven;
   final int? totalFollowers;
   final int? profileViews;
+  final bool? isFollowing;
 
   const ProfileResponse({
     this.id,
@@ -17,6 +18,7 @@ class ProfileResponse  extends Equatable{
     this.totalLikesGiven,
     this.totalFollowers,
     this.profileViews,
+    this.isFollowing,
   });
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => ProfileResponse(
@@ -27,6 +29,7 @@ class ProfileResponse  extends Equatable{
     totalLikesGiven: json["totalLikesGiven"],
     totalFollowers: json["totalFollowers"],
     profileViews: json["profileViews"],
+    isFollowing: json["isFollowing"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,9 +40,10 @@ class ProfileResponse  extends Equatable{
     "totalLikesGiven": totalLikesGiven,
     "totalFollowers": totalFollowers,
     "profileViews": profileViews,
+    "isFollowing": isFollowing,
   };
 
   @override
-  List<Object?> get props => [id, username, email, profilePicture, totalLikesGiven, totalFollowers, profileViews];
+  List<Object?> get props => [id, username, email, profilePicture, totalLikesGiven, totalFollowers, profileViews,isFollowing];
 }
 

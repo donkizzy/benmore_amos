@@ -23,8 +23,14 @@ class _CreatePostState extends State<CreatePost> with FormMixin,SnackBarMixin {
   final TextEditingController title = TextEditingController();
   ValueNotifier<File?> image = ValueNotifier<File?>(null);
   final ValueNotifier<bool> _isLoading = ValueNotifier(false);
-  PostCubit postCubit = PostCubit();
+ late  PostCubit postCubit ;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    postCubit = context.read<PostCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

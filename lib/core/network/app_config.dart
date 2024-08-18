@@ -1,5 +1,5 @@
 abstract class AppConfig {
-  static const String baseUrl = 'http://localhost:3000/api';
+  static const String baseUrl = 'https://benmore-backend.onrender.com/api';
 
   static const String register = '$baseUrl/users/register';
   static const String login = '$baseUrl/users/login';

@@ -14,6 +14,7 @@ part 'post_state.dart';
 
 class PostCubit extends Cubit<PostState> {
 
+  List<Post>? posts = [];
   late PostRepository _postRepository;
 
   PostCubit({PostRepository? postRepository}) : super(PostInitial()) {
@@ -30,12 +31,17 @@ class PostCubit extends Cubit<PostState> {
     );
   }
 
-  void fetchPosts({required int page, String? userId}) async {
-    emit(FetchPostLoading());
+  void fetchPosts({required int page, String? userId,bool isPagination = false}) async {
+    if(!isPagination){
+      emit(FetchPostLoading());
+    }
     final result = await _postRepository.fetchPosts(page: page,userId: userId);
     result.fold(
           (l) => emit(FetchPostError(error: l)),
-          (r) => emit(FetchPostSuccess(posts: r)),
+          (r) {
+            posts?.addAll(r.posts ?? []);
+            emit(FetchPostSuccess(posts: r));
+          },
     );
   }
 
@@ -53,7 +59,11 @@ class PostCubit extends Cubit<PostState> {
     final result = await _postRepository.createPost(createPostRequest: createPostRequest, file: file);
     result.fold(
           (l) => emit(CreatePostError(error: l)),
-          (r) => emit(CreatePostSuccess(createPostResponse: r)),
+          (r) {
+            posts?.insert(0, r.post!);
+            emit(FetchPostSuccess(posts: PostsResponse(posts: posts)));
+            emit(CreatePostSuccess(createPostResponse: r));
+          },
     );
   }
 
