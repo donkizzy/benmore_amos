@@ -1,16 +1,40 @@
-# benmore_amos
+# Benmore Amos
 
-A new Flutter project.
+## Project Description
 
-## Getting Started
+Benmore Amos is a Flutter project that includes features for authentication, posts, and shared widgets. It uses the BLoC pattern for state management and integrates various packages for network requests, image caching, and more.
 
-This project is a starting point for a Flutter application.
+## How to Run
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
+- Dart SDK: Included with Flutter
+- Android Studio or Visual Studio Code: Recommended IDEs
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Steps
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/donkizzy/benmore_amos.git
+   cd benmore_amos
+   ```
+   
+###Install dependencies:
+
+   ```sh
+   flutter pub get
+   ```
+
+3. **Run the app:**
+
+   ```sh
+    flutter run
+    ```
+   
+### How to Run Tests
+
+   ```sh
+   flutter test
+   ```
